@@ -3,10 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    protected $fillable = ['user_id','order_no'];
+    use SoftDeletes;
+
+    protected $fillable = [
+        'user_id',
+        'order_number',
+        'total_amount'
+    ];
 
     public function user()
     {

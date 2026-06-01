@@ -9,10 +9,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
+
             $table->engine = 'InnoDB';
 
             $table->id();
+
             $table->string('name');
+
             $table->decimal('price', 10, 2)->default(0);
 
             $table->timestamps();

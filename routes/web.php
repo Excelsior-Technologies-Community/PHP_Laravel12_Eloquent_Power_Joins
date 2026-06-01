@@ -8,3 +8,6 @@ Route::get('/', function () {
 });
 
 Route::get('/orders', [OrderController::class, 'index']);
+
+Route::delete('/orders/{id}', [OrderController::class, 'destroy'])
+    ->name('orders.destroy');
