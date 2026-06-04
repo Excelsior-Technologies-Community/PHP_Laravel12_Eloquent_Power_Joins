@@ -12,17 +12,22 @@ class OrderItemSeeder extends Seeder
     public function run(): void
     {
         $orders = Order::all();
+        $products = Product::all();
 
         foreach ($orders as $order) {
-            // Get some products
-            $products = Product::take(3)->get();
 
-            foreach ($products as $product) {
+            // attach random 2–3 products per order
+            $randomProducts = $products->random(rand(2, 3));
+
+            foreach ($randomProducts as $product) {
+
                 OrderItem::create([
                     'order_id'   => $order->id,
                     'product_id' => $product->id,
                     'quantity'   => rand(1, 5),
-                    'price'      => $product->price, // <-- required field
+
+                    // ✅ required for total calculation
+                    'price'      => $product->price,
                 ]);
             }
         }

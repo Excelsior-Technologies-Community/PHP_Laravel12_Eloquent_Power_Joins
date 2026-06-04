@@ -10,8 +10,22 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         Product::insert([
-            ['name' => 'Laptop'],
-            ['name' => 'Mouse'],
+            [
+                'name' => 'Laptop',
+                'price' => 50000
+            ],
+            [
+                'name' => 'Mouse',
+                'price' => 1000
+            ],
+            [
+                'name' => 'Keyboard',
+                'price' => 1500
+            ],
+            [
+                'name' => 'Monitor',
+                'price' => 12000
+            ],
         ]);
     }
 }

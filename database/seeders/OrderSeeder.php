@@ -13,10 +13,16 @@ class OrderSeeder extends Seeder
     {
         $user = User::first();
 
-        Order::create([
-            'user_id' => $user->id,
-            // 'total' => 55500,
-             'order_number' => 'ORD-' . Str::random(8),
-        ]);
+        // create multiple orders (important for dashboard)
+        for ($i = 0; $i < 5; $i++) {
+
+            Order::create([
+                'user_id' => $user->id,
+                'order_number' => 'ORD-' . Str::upper(Str::random(8)),
+
+                // ✅ REQUIRED for your new filter feature
+                'status' => ['pending', 'completed', 'cancelled'][array_rand([0,1,2])],
+            ]);
+        }
     }
 }
