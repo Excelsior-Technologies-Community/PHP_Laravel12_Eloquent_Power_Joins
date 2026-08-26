@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -11,28 +10,21 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Disable FK checks and delete rows
-        \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        \DB::table('users')->delete();
-        \DB::statement('ALTER TABLE users AUTO_INCREMENT = 1;');
-        \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $users = [
+            ['name' => 'Rahul Patel', 'email' => 'rahul@test.com'],
+            ['name' => 'Priya Sharma', 'email' => 'priya@test.com'],
+            ['name' => 'Amit Kumar', 'email' => 'amit@test.com'],
+            ['name' => 'Sneha Joshi', 'email' => 'sneha@test.com'],
+            ['name' => 'Vikram Singh', 'email' => 'vikram@test.com'],
+            ['name' => 'Neha Gupta', 'email' => 'neha@test.com'],
+        ];
 
-        // Create random users
-        for ($i = 1; $i <= 5; $i++) {
+        foreach ($users as $userData) {
             User::create([
-                'name' => 'Random User ' . $i,
-                'email' => 'user' . now()->timestamp . $i . '@test.com',
-                // 'password' => Hash::make('secret123'),
+                'name' => $userData['name'],
+                'email' => $userData['email'],
+                'password' => Hash::make('password'),
             ]);
         }
-
-        // Fixed user
-        User::updateOrCreate(
-            ['email' => 'rahul@test.com'],
-            [
-                'name' => 'Rahul Patel',
-                // 'password' => Hash::make('secret123'),
-            ]
-        );
     }
 }

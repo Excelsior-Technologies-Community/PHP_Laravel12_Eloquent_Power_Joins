@@ -16,9 +16,23 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
-    
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function getTotalSpentAttribute()
+    {
+        return $this->orders()->sum('total_amount');
+    }
 }

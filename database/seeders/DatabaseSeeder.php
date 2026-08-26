@@ -2,24 +2,32 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\User;
+use App\Models\Order;
+use App\Models\OrderItem;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
+    public function run(): void
+    {
+        \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        \DB::table('order_items')->delete();
+        \DB::table('orders')->delete();
+        \DB::table('products')->delete();
+        \DB::table('categories')->delete();
+        \DB::table('users')->delete();
+        \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-    /**
-     * Seed the application's database.
-     */
-   public function run(): void
-{
-    $this->call([
-        UserSeeder::class,
-        ProductSeeder::class,
-        OrderSeeder::class,
-        OrderItemSeeder::class,
-    ]);
-}
+        $this->call([
+            CategorySeeder::class,
+            ProductSeeder::class,
+            UserSeeder::class,
+            OrderSeeder::class,
+            OrderItemSeeder::class,
+        ]);
+    }
 }

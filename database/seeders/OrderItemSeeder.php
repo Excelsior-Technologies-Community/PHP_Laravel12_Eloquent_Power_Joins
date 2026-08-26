@@ -15,21 +15,20 @@ class OrderItemSeeder extends Seeder
         $products = Product::all();
 
         foreach ($orders as $order) {
-
-            // attach random 2–3 products per order
-            $randomProducts = $products->random(rand(2, 3));
+            $randomProducts = $products->random(rand(1, 4));
 
             foreach ($randomProducts as $product) {
-
                 OrderItem::create([
-                    'order_id'   => $order->id,
+                    'order_id' => $order->id,
                     'product_id' => $product->id,
-                    'quantity'   => rand(1, 5),
-
-                    // ✅ required for total calculation
-                    'price'      => $product->price,
+                    'quantity' => rand(1, 5),
+                    'price' => $product->price,
                 ]);
             }
+
+            $order->update([
+                'total_amount' => $order->items()->sum(\DB::raw('quantity * price')),
+            ]);
         }
     }
 }

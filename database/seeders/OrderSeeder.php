@@ -11,18 +11,20 @@ class OrderSeeder extends Seeder
 {
     public function run(): void
     {
-        $user = User::first();
+        $users = User::all();
+        $statuses = ['pending', 'completed', 'cancelled'];
 
-        // create multiple orders (important for dashboard)
-        for ($i = 0; $i < 5; $i++) {
-
-            Order::create([
-                'user_id' => $user->id,
-                'order_number' => 'ORD-' . Str::upper(Str::random(8)),
-
-                // ✅ REQUIRED for your new filter feature
-                'status' => ['pending', 'completed', 'cancelled'][array_rand([0,1,2])],
-            ]);
+        foreach ($users as $user) {
+            $orderCount = rand(2, 5);
+            for ($i = 0; $i < $orderCount; $i++) {
+                Order::create([
+                    'user_id' => $user->id,
+                    'order_number' => 'ORD-' . Str::upper(Str::random(8)),
+                    'status' => $statuses[array_rand($statuses)],
+                    'total_amount' => 0,
+                    'created_at' => now()->subDays(rand(0, 30)),
+                ]);
+            }
         }
     }
 }

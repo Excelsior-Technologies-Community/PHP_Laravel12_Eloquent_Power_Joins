@@ -12,7 +12,8 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'order_number',
-        'total_amount'
+        'total_amount',
+        'status',
     ];
 
     public function user()
@@ -23,5 +24,15 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function getStatusBadgeAttribute()
+    {
+        return match($this->status) {
+            'pending' => 'warning',
+            'completed' => 'success',
+            'cancelled' => 'danger',
+            default => 'secondary',
+        };
     }
 }

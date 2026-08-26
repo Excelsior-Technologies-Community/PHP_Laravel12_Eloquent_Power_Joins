@@ -9,20 +9,22 @@ class Product extends Model
 {
     use HasFactory;
 
-    // 🔹 Table name (IMPORTANT)
-    // Remove this line ONLY if your table name is exactly `products`
     protected $table = 'products';
 
-    // 🔹 Mass assignable fields
     protected $fillable = [
-        'title',
+        'name',
         'price',
+        'stock',
+        'category_id',
     ];
 
-    // 🔹 Relationship: Product → Order Items
-  public function orderItems()
-{
-    return $this->hasMany(OrderItem::class);
-}
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

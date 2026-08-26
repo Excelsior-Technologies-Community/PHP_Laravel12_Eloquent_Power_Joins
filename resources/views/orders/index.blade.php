@@ -1,246 +1,298 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <title>Orders Dashboard</title>
+@section('title', '⚡ Orders Dashboard')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+@section('content')
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: radial-gradient(circle at top, #111827, #0b0f19);
-            color: #e5e7eb;
-        }
-
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 25px;
-            background: rgba(17, 24, 39, 0.6);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .title {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .badge-soft {
-            background: rgba(59, 130, 246, 0.15);
-            color: #60a5fa;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 18px;
-            backdrop-filter: blur(10px);
-        }
-
-        .stat-title {
-            font-size: 13px;
-            color: #9ca3af;
-        }
-
-        .stat-value {
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .search-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 10px;
-            border-radius: 10px;
-        }
-
-        .btn-glow {
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            border: none;
-            color: white;
-            border-radius: 10px;
-            padding: 10px;
-        }
-
-        .table-glass {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        table {
-            color: #e5e7eb;
-        }
-
-        thead {
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        th {
-            color: #93c5fd;
-        }
-
-        .badge-custom {
-            background: rgba(34, 197, 94, 0.2);
-            color: #4ade80;
-            padding: 6px 10px;
-            border-radius: 8px;
-        }
-
-        .alert-success {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #4ade80;
-            border-radius: 12px;
-        }
-    </style>
-</head>
-
-<body>
-
-<!-- TOP BAR -->
-<div class="topbar">
-    <div class="title">⚡ Orders Dashboard</div>
-    <div class="badge-soft">Laravel 12 • Power Joins</div>
+<!-- NAVIGATION CARDS -->
+<div class="row g-3 mb-4">
+    <div class="col-md-2">
+        <a href="{{ route('orders.index') }}" class="nav-card">
+            <i class="bi bi-cart-check text-primary"></i>
+            <span>Orders</span>
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a href="{{ route('users.index') }}" class="nav-card">
+            <i class="bi bi-people text-success"></i>
+            <span>Users</span>
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a href="{{ route('products.index') }}" class="nav-card">
+            <i class="bi bi-box-seam text-warning"></i>
+            <span>Products</span>
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a href="{{ route('categories.index') }}" class="nav-card">
+            <i class="bi bi-tags text-info"></i>
+            <span>Categories</span>
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a href="{{ route('power-joins.nested') }}" class="nav-card">
+            <i class="bi bi-diagram-3 text-danger"></i>
+            <span>Power Joins</span>
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a href="{{ route('orders.create') }}" class="nav-card">
+            <i class="bi bi-plus-circle text-light"></i>
+            <span>New Order</span>
+        </a>
+    </div>
 </div>
 
-<div class="container mt-4">
-
-    <!-- STATS -->
-    <div class="row g-3 mb-4">
-
-        <div class="col-md-4">
-            <div class="glass-card">
-                <div class="stat-title">Total Users</div>
-                <div class="stat-value">{{ $totalUsers }}</div>
-            </div>
+<!-- REVENUE STATS -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="glass-card">
+            <div class="stat-title">Total Users</div>
+            <div class="stat-value text-primary">{{ $totalUsers }}</div>
         </div>
-
-        <div class="col-md-4">
-            <div class="glass-card">
-                <div class="stat-title">Total Orders</div>
-                <div class="stat-value">{{ $totalOrders }}</div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="glass-card">
-                <div class="stat-title">Total Products</div>
-                <div class="stat-value">{{ $totalProducts }}</div>
-            </div>
-        </div>
-
     </div>
+    <div class="col-md-3">
+        <div class="glass-card">
+            <div class="stat-title">Total Orders</div>
+            <div class="stat-value text-success">{{ $totalOrders }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="glass-card">
+            <div class="stat-title">Total Products</div>
+            <div class="stat-value text-warning">{{ $totalProducts }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="glass-card">
+            <div class="stat-title">Total Revenue</div>
+            <div class="stat-value text-info">₹{{ number_format($totalRevenue, 2) }}</div>
+        </div>
+    </div>
+</div>
 
-    <!-- SEARCH + FILTER -->
-    <form method="GET" action="/orders" class="mb-4">
-        <div class="row g-2">
-
-            <div class="col-md-6">
-                <input type="text" name="search"
-                    value="{{ request('search') }}"
-                    class="form-control search-box"
-                    placeholder="Search User / Order / Product">
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="glass-card">
+            <div class="stat-title">Today's Revenue</div>
+            <div class="stat-value text-success">₹{{ number_format($todayRevenue, 2) }}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="glass-card">
+            <div class="stat-title">Monthly Revenue</div>
+            <div class="stat-value text-warning">₹{{ number_format($monthlyRevenue, 2) }}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="glass-card">
+            <div class="stat-title">Avg Order Value</div>
+            <div class="stat-value text-danger">
+                ₹{{ $totalOrders > 0 ? number_format($totalRevenue / $totalOrders, 2) : '0.00' }}
             </div>
+        </div>
+    </div>
+</div>
 
-            <div class="col-md-4">
-                <select name="status" class="form-control search-box">
+<!-- CHART + RECENT ORDERS -->
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="chart-container">
+            <h5 class="mb-3">Orders by Status</h5>
+            <canvas id="statusChart" height="200"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="chart-container">
+            <h5 class="mb-3">Recent Orders</h5>
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>User</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($recentOrders as $ro)
+                        <tr>
+                            <td>{{ $ro->order_number }}</td>
+                            <td>{{ $ro->user->name ?? 'N/A' }}</td>
+                            <td>
+                                <span class="badge bg-{{ $ro->status_badge }}">{{ ucfirst($ro->status) }}</span>
+                            </td>
+                            <td>{{ $ro->created_at->format('d M') }}</td>
+                        </tr>
+                        @empty
+                        <tr><td colspan="4" class="text-center text-muted">No orders yet</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TOP PRODUCTS -->
+<div class="row g-3 mb-4">
+    <div class="col-md-12">
+        <div class="chart-container">
+            <h5 class="mb-3">Top Selling Products</h5>
+            <div class="row">
+                @forelse($topProducts as $tp)
+                <div class="col-md-2 col-6 text-center mb-3">
+                    <div class="glass-card">
+                        <i class="bi bi-trophy-fill text-warning" style="font-size: 24px;"></i>
+                        <div class="mt-2 fw-bold">{{ $tp->name }}</div>
+                        <small class="text-muted">{{ $tp->total_sold }} sold</small>
+                    </div>
+                </div>
+                @empty
+                <p class="text-muted">No product sales yet</p>
+                @endforelse
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SEARCH + FILTERS -->
+<form method="GET" action="{{ route('orders.index') }}" class="mb-4">
+    <div class="glass-card">
+        <div class="row g-2">
+            <div class="col-md-3">
+                <input type="text" name="search" value="{{ request('search') }}" class="form-control search-box" placeholder="Search User / Order / Product">
+            </div>
+            <div class="col-md-2">
+                <select name="status" class="form-select search-box">
                     <option value="">All Status</option>
                     <option value="pending" {{ request('status')=='pending'?'selected':'' }}>Pending</option>
                     <option value="completed" {{ request('status')=='completed'?'selected':'' }}>Completed</option>
                     <option value="cancelled" {{ request('status')=='cancelled'?'selected':'' }}>Cancelled</option>
                 </select>
             </div>
-
             <div class="col-md-2">
-                <button class="btn btn-glow w-100">
-                    <i class="bi bi-search"></i>
-                </button>
+                <select name="user_id" class="form-select search-box">
+                    <option value="">All Users</option>
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}" {{ request('user_id')==$user->id?'selected':'' }}>{{ $user->name }}</option>
+                    @endforeach
+                </select>
             </div>
-
+            <div class="col-md-2">
+                <select name="product_id" class="form-select search-box">
+                    <option value="">All Products</option>
+                    @foreach($products as $product)
+                        <option value="{{ $product->id }}" {{ request('product_id')==$product->id?'selected':'' }}>{{ $product->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-glow w-100"><i class="bi bi-search"></i></button>
+            </div>
+            <div class="col-md-2">
+                <a href="{{ route('orders.index') }}" class="btn btn-outline-light w-100">Reset</a>
+            </div>
         </div>
-    </form>
-
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <div class="row g-2 mt-2">
+            <div class="col-md-2">
+                <label class="form-label small text-muted">Date From</label>
+                <input type="date" name="date_from" value="{{ request('date_from') }}" class="form-control search-box">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label small text-muted">Date To</label>
+                <input type="date" name="date_to" value="{{ request('date_to') }}" class="form-control search-box">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label small text-muted">Min Price (₹)</label>
+                <input type="number" name="price_min" value="{{ request('price_min') }}" class="form-control search-box" placeholder="0">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label small text-muted">Max Price (₹)</label>
+                <input type="number" name="price_max" value="{{ request('price_max') }}" class="form-control search-box" placeholder="99999">
+            </div>
         </div>
-    @endif
-
-    <!-- TABLE -->
-    <div class="table-glass">
-
-        <table class="table table-dark table-hover mb-0">
-
-            <thead>
-                <tr>
-                    <th>User</th>
-                    <th>Order No</th>
-                    <th>Product</th>
-                    <th>Qty</th>
-                    <th>Total</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-                @foreach($orders as $order)
-                <tr>
-                    <td>{{ $order->user_name }}</td>
-                    <td>{{ $order->order_no }}</td>
-                    <td>{{ $order->product_name }}</td>
-
-                    <td>
-                        <span class="badge-custom">
-                            {{ $order->qty }}
-                        </span>
-                    </td>
-
-                    <td>
-                        <span class="badge-custom">
-                            ₹{{ $order->total_amount }}
-                        </span>
-                    </td>
-
-                    <td>
-                        <form action="{{ route('orders.destroy', $order->order_id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-
-                            <button class="btn btn-danger btn-sm"
-                                onclick="return confirm('Delete this order?')">
-                                <i class="bi bi-trash"></i>
-                            </button>
-
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-
-            </tbody>
-
-        </table>
-
     </div>
+</form>
 
-    <!-- PAGINATION -->
-    <div class="mt-3">
-        {{ $orders->links() }}
-    </div>
+@if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
 
+<!-- ORDERS TABLE -->
+<div class="table-glass">
+    <table class="table table-dark table-hover mb-0">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Order No</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($orders as $order)
+            <tr>
+                <td>{{ $order->user_name }}</td>
+                <td>{{ $order->order_no }}</td>
+                <td>{{ $order->product_name }}</td>
+                <td><span class="badge bg-secondary">{{ $order->qty }}</span></td>
+                <td><span class="badge bg-success">₹{{ number_format($order->total_amount, 2) }}</span></td>
+                <td>
+                    <span class="badge bg-{{ $order->order_status == 'completed' ? 'success' : ($order->order_status == 'pending' ? 'warning' : 'danger') }}">
+                        {{ ucfirst($order->order_status) }}
+                    </span>
+                </td>
+                <td>{{ \Carbon\Carbon::parse($order->order_date)->format('d M Y') }}</td>
+                <td>
+                    <a href="{{ route('orders.edit', $order->order_id) }}" class="btn btn-sm btn-outline-info"><i class="bi bi-pencil"></i></a>
+                    <form action="{{ route('orders.destroy', $order->order_id) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this order?')"><i class="bi bi-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            @empty
+            <tr><td colspan="8" class="text-center text-muted py-4">No orders found</td></tr>
+            @endforelse
+        </tbody>
+    </table>
 </div>
 
-</body>
-</html>
+<!-- PAGINATION -->
+<div class="mt-3">
+    {{ $orders->links() }}
+</div>
+
+@endsection
+
+@push('scripts')
+<script>
+const ctx = document.getElementById('statusChart').getContext('2d');
+const statusData = @json($ordersByStatus);
+new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: Object.keys(statusData).map(s => s.charAt(0).toUpperCase() + s.slice(1)),
+        datasets: [{
+            data: Object.values(statusData),
+            backgroundColor: ['#eab308', '#22c55e', '#ef4444'],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom', labels: { color: '#e5e7eb' } }
+        }
+    }
+});
+</script>
+@endpush
